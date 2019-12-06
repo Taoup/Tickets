@@ -20,8 +20,11 @@
 login(url = home_page, nick_name = '麦子')
 double_check_login(url = home_page, nick_name = '麦子')
 ```
-2. 下单:order(...),场次信息、票档（票价）信息，需要从下单的页面copy过来。这个函数还有一个默认参数：refresh_interval，即刷新频率，目前设置为0.5s，看需要自己设置。有时候刷新太快会：
+2. 下单:order(...),场次信息、票档（票价）信息，需要从下单的页面copy过来，如下图框中的部分。这个函数还有一个默认参数：refresh_interval，即刷新频率，目前设置为0.5s，看需要自己设置。有时候刷新太快会：
 > 抱歉！系统繁忙，暂时无法处理您的请求……
+
+[![image.png](https://i.postimg.cc/Pr7KMZPs/image.png)](https://postimg.cc/0bppkzYc)
+
 
 ```python
 order(target = target_url,          #抢票页面的url
