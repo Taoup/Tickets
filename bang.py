@@ -52,9 +52,14 @@ def order(target, city, date, price, num_tickets, refresh_interval = 0.5):
         my_print("还未开售，疯狂刷新中...")
         sleep(refresh_interval)
         driver.refresh()
-        buybtn = driver.find_element_by_class_name("buybtn")
+        try:
+            buybtn = driver.find_element_by_class_name("buybtn")
+        except Exception:
+            driver.get(target)
+            buybtn = driver.find_element_by_class_name("buybtn")
 
     # 选择城市，有的抢票可能没有这个选项
+    driver.refresh()
     if city:
         try:
             city_elements = driver.find_elements_by_class_name('cityitem')
@@ -97,7 +102,8 @@ def confirm_order(audiences):
     """
     从前一步下单，到这一步确认订单，在抢票忙时链接的跳转可能会比较耗时，
     这里可能要考虑下鲁棒性。
-    """
+    """    
+    driver.refresh()
     candidates = driver.find_elements_by_class_name("next-checkbox-label")
     for who in audiences:
         for web_object in candidates:
@@ -120,15 +126,19 @@ DEBUG = False
 if __name__ == '__main__':
 
     home_page = "https://www.damai.cn/"
-    target_url = "https://detail.damai.cn/item.htm?spm=a2oeg.home.card_0.ditem_2.4a3423e15XF1CC&id=608137824452"
+    target_url = """
+https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.359a47487igv4I&id=608107319952&clicktitle=2019%20JonyJ%E5%8D%97%E4%BA%AC%E5%A5%A5%E4%BD%93%E6%BC%94%E5%94%B1%E4%BC%9A    """
+    target_url = target_url.strip()
 
     login(url = home_page, nick_name = '麦子')
     double_check_login(url = home_page, nick_name = '麦子')
 
+    # sleep(60*48)
+
     order(target = target_url,          #抢票页面的url
-            city = '无锡',              #不用选择城市的场次，city传入None
-            date = '2020-01-01',        
-            price = '内场1680元', 
+            city = None,              #不用选择城市的场次，city传入None
+            date = '2019-12-14 ',        
+            price = '300元（看台）', 
             num_tickets = 2)
 
-    confirm_order(audiences = ['马宏涛', 'xxx'])
+    confirm_order(audiences = ['马宏涛', '张文照'])
