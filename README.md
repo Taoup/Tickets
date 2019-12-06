@@ -12,13 +12,18 @@
 
 ## 使用详解
 
-**抢票前，确保DEBUG的值为False，最好首先在非目标票种那先测试下，毕竟它网页在不断变化，有些定位方式可能需要调整**
+
+运行方法：
+- 根据下列步骤设置好main.py里的参数
+- ```python main.py```
+
+**抢票前，最好首先在非目标票种那先测试下，毕竟它网页在不断变化，有些定位方式可能需要调整**
 
 抢票主要包括3个步骤，我使用了4个函数来完成。
-1. 登录：login和double_check_login， 这一步需要用到的参数有：大麦网的url & 登录后显示的nick name(用于脚本确认已经登录)
+1. 登录：login和double_check_login， 这一步需要用到的参数有：**登录后显示的昵称**(用于脚本确认已经登录)
 ```python 
-login(url = home_page, nick_name = '麦子')
-double_check_login(url = home_page, nick_name = '麦子')
+login(nick_name = '麦子')
+double_check_login(nick_name = '麦子')
 ```
 2. 下单:order(...),场次信息、票档（票价）信息，需要从下单的页面copy过来，如下图框中的部分。这个函数还有一个默认参数：refresh_interval，即刷新频率，目前设置为0.5s，看需要自己设置。有时候刷新太快会：
 > 抱歉！系统繁忙，暂时无法处理您的请求……

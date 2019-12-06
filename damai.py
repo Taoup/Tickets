@@ -8,12 +8,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-def my_print(msg):
-    print("-" * 20 + msg + "-" * 20)
+from utils import my_print
 
 
-def login(url, nick_name = 'xxx', cookie_file = 'cookies.pkl'):
+
+def login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
     driver.get(url)
     if os.path.exists(cookie_file):
         with open(cookie_file, 'rb') as t:
@@ -33,7 +32,7 @@ def login(url, nick_name = 'xxx', cookie_file = 'cookies.pkl'):
         pickle.dump(driver.get_cookies(), open(cookie_file, "wb"))
         
 
-def double_check_login(url, nick_name = 'xxx', cookie_file = 'cookies.pkl'):
+def double_check_login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
     #扫码登录或者加载cookie成功，检查是否真的登录成功。
     driver.get(url)
     tmp =  driver.find_elements_by_class_name("span-box-header")
@@ -58,7 +57,6 @@ def order(target, city, date, price, num_tickets, refresh_interval = 0.5):
             driver.get(target)
             buybtn = driver.find_element_by_class_name("buybtn")
 
-    driver.refresh()
     # 选择城市，有的抢票可能没有这个选项
     if city:
         try:
@@ -103,7 +101,6 @@ def confirm_order(audiences):
     从前一步下单，到这一步确认订单，在抢票忙时链接的跳转可能会比较耗时，
     这里可能要考虑下鲁棒性。
     """    
-    driver.refresh()
     candidates = driver.find_elements_by_class_name("next-checkbox-label")
     for who in audiences:
         for web_object in candidates:
@@ -114,18 +111,19 @@ def confirm_order(audiences):
 
     #确定下单
     confirm_btn = driver.find_element_by_css_selector(".submit-wrapper .next-btn")
-    if not DEBUG:
+    if __debug__:
         confirm_btn.click()
-
+    global success
+    success = True
     my_print("抢票成功，请自行支付")        
 
 
+success = False
 driver = webdriver.Chrome()
-DEBUG = False
+driver.implicitly_wait(3)
 
 if __name__ == '__main__':
 
-    home_page = "https://www.damai.cn/"
     target_url = """
 https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.359a47487igv4I&id=608107319952&clicktitle=2019%20JonyJ%E5%8D%97%E4%BA%AC%E5%A5%A5%E4%BD%93%E6%BC%94%E5%94%B1%E4%BC%9A    
     """
@@ -135,8 +133,8 @@ https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.359a47487igv4I&id
     #     my_print(f"sleep the {i}th min")
     #     sleep(60)
 
-    login(url = home_page, nick_name = '麦子')
-    double_check_login(url = home_page, nick_name = '麦子')
+    login(nick_name = '麦子')
+    double_check_login(nick_name = '麦子')
 
 
     order(target = target_url,          #抢票页面的url
@@ -145,4 +143,4 @@ https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.359a47487igv4I&id
             price = '180元', 
             num_tickets = 2)
 
-    confirm_order(audiences = ['马宏涛', '张文照'])
+    confirm_order(audiences = ['xxx', 'xxx'])
