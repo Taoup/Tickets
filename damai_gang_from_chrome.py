@@ -25,9 +25,9 @@ def login(url = "https://www.damai.cn/", cookie_file = 'cookies.pkl'):
                 driver.add_cookie(c)
     else:
         while True:
-            my_print("请登录")
+            my_print("请从打开的网页进行登录")
             tmp =  driver.find_elements_by_class_name("span-box-header")
-            if loggin_user_name in [i.text for i in tmp]:
+            if loggin_user_name in [i.text for i in tmp if hasattr(i, 'text')]:
                 break
             sleep(3)
         pickle.dump(driver.get_cookies(), open(cookie_file, "wb"))
@@ -36,13 +36,9 @@ def login(url = "https://www.damai.cn/", cookie_file = 'cookies.pkl'):
 def double_check_login(cookie_file = 'cookies.pkl'):
     #扫码登录或者加载cookie成功，检查是否真的登录成功。
     driver.get(target_url)
-    diff_of_2types = ["div[3]/div[1]/a[2]/div", "ul/li[2]/div/label/a[2]"]
-    locator = (By.XPATH, "/html/body/div[1]/div/" + diff_of_2types['detail' not in target_url])
-    try:
-        WebDriverWait(driver, 3, 0.3).until(
-            EC.text_to_be_present_in_element(locator, loggin_user_name))
-    except Exception as e:
-        my_print(f'登录失败，删除{cookie_file},然后重试')
+    tmp =  driver.find_elements_by_class_name("span-box-header")
+    if loggin_user_name not in [i.text for i in tmp if hasattr(i, 'text')]:
+        my_print(f'登录失败，删除{cookie_file},重试中...')
         os.remove(cookie_file)
         login()
 
@@ -59,7 +55,6 @@ if __name__ == '__main__':
 
     login()
     double_check_login()
-
 
     # order()
 
