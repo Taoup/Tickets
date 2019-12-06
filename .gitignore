@@ -1,0 +1,4 @@
+cookies.pkl
+chromedriver.exe
+*.pyc
+.vscode/*
