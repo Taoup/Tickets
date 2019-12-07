@@ -1,4 +1,4 @@
 
 
 def my_print(msg):
-    print("-" * 20 + msg + "-" * 20)
+    print("-" * 20 + repr(msg) + "-" * 20)

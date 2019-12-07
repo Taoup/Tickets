@@ -11,8 +11,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from utils import my_print
 
 
+def login(nick_name):
+    _login(nick_name)
+    _double_check_login(nick_name)
 
-def login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
+    # prefs = {"profile.managed_default_content_settings.images":2}
+    # prefs = {"profile.managed_default_content_settings.images": 2,'permissions.default.stylesheet':2}
+    # options.add_experimental_option("prefs",prefs)
+    # global driver
+    # driver = webdriver.Chrome(options=options)
+
+
+def _login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
     driver.get(url)
     if os.path.exists(cookie_file):
         with open(cookie_file, 'rb') as t:
@@ -24,7 +34,7 @@ def login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/")
                 driver.add_cookie(c)
     else:
         while True:
-            my_print("请从打开的网页进行登录")
+            my_print("请从自行从打开的网页进行登录")
             tmp =  driver.find_elements_by_class_name("span-box-header")
             if nick_name in [i.text for i in tmp if hasattr(i, 'text')]:
                 break
@@ -32,14 +42,14 @@ def login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/")
         pickle.dump(driver.get_cookies(), open(cookie_file, "wb"))
         
 
-def double_check_login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
+def _double_check_login(nick_name, cookie_file = 'cookies.pkl', url = "https://www.damai.cn/"):
     #扫码登录或者加载cookie成功，检查是否真的登录成功。
     driver.get(url)
     tmp =  driver.find_elements_by_class_name("span-box-header")
     if nick_name not in [i.text for i in tmp if hasattr(i, 'text')]:
         my_print(f'登录失败，删除{cookie_file},重试中...')
         os.remove(cookie_file)
-        login()
+        _login(nick_name)
 
     my_print("登录成功")
 
@@ -51,22 +61,15 @@ def order(target, city, date, price, num_tickets, refresh_interval = 0.5):
         my_print("还未开售，疯狂刷新中...")
         sleep(refresh_interval)
         driver.refresh()
-        try:
-            buybtn = driver.find_element_by_class_name("buybtn")
-        except Exception:
-            driver.get(target)
-            buybtn = driver.find_element_by_class_name("buybtn")
+        buybtn = driver.find_element_by_class_name("buybtn")
 
     # 选择城市，有的抢票可能没有这个选项
     if city:
-        try:
-            city_elements = driver.find_elements_by_class_name('cityitem')
-            for wo in city_elements:
-                if hasattr(wo, 'text') and city in wo.text:
-                    wo.click()
-                    break
-        except Exception as e:
-            my_print('不用选择城市，继续...')
+        city_elements = driver.find_elements_by_class_name('cityitem')
+        for wo in city_elements:
+            if hasattr(wo, 'text') and city in wo.text:
+                wo.click()
+                break
 
     # 选择时间场次
     date_elements = driver.find_elements_by_class_name('select_right_list_item')
@@ -83,11 +86,7 @@ def order(target, city, date, price, num_tickets, refresh_interval = 0.5):
             break
     
     # 选择数量 or 选座购票
-    try:
-        num_elem = driver.find_element_by_class_name('cafe-c-input-number-input')
-    except Exception:
-        my_print("目前无法自动选座，后续操作请自行进行...")
-        exit(0)    
+    num_elem = driver.find_element_by_class_name('cafe-c-input-number-input')
     num_elem.clear()
     num_elem.send_keys(num_tickets)
 
@@ -102,11 +101,15 @@ def confirm_order(audiences):
     这里可能要考虑下鲁棒性。
     """    
     candidates = driver.find_elements_by_class_name("next-checkbox-label")
+    as_least_one = False
     for who in audiences:
         for web_object in candidates:
             if who in web_object.text:
                 web_object.click()
-    
+                as_least_one = True
+    if not as_least_one:
+        raise Exception("确认订单时，没有任何观众被选中，请尽快检查")
+
     #支付方式，目前看到的默认支付宝
 
     #确定下单
@@ -119,28 +122,12 @@ def confirm_order(audiences):
 
 
 success = False
+
+options = webdriver.ChromeOptions()
 driver = webdriver.Chrome()
-driver.implicitly_wait(3)
+driver.implicitly_wait(5)
+
 
 if __name__ == '__main__':
 
-    target_url = """
-https://detail.damai.cn/item.htm?spm=a2oeg.search_category.0.0.359a47487igv4I&id=608107319952&clicktitle=2019%20JonyJ%E5%8D%97%E4%BA%AC%E5%A5%A5%E4%BD%93%E6%BC%94%E5%94%B1%E4%BC%9A    
-    """
-    target_url = target_url.strip()
-
-    # for i in range(18):
-    #     my_print(f"sleep the {i}th min")
-    #     sleep(60)
-
-    login(nick_name = '麦子')
-    double_check_login(nick_name = '麦子')
-
-
-    order(target = target_url,          #抢票页面的url
-            city = None,              #不用选择城市的场次，city传入None
-            date = '2019-12-21',        
-            price = '180元', 
-            num_tickets = 2)
-
-    confirm_order(audiences = ['xxx', 'xxx'])
+    """test code here"""
