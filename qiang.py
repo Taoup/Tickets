@@ -14,12 +14,12 @@ layout = [[sg.Text('你登录后显示的昵称：'), sg.Input(key='nick_name')]
           [sg.Text('观众：（逗号分隔，中文的）'), sg.Input(key='audiences')],
           [sg.Button('开抢！'), sg.Button('Exit')]]
 
-window = sg.Window('Pattern 2B', layout)
+window = sg.Window('开冲', layout)
 
 while True:  # Event Loop
     event, values = window.read()
     if event in  (None, 'Exit'):
-        damai.quit()
+        damai.driver.quit()
         break
     if event == '开抢！':
         target_url = values['target_url']
