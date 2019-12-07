@@ -5,7 +5,7 @@ GUI大麦网自动抢票工具
 
 ## 新增功能
 - 使用图形界面进行简单包装,大概长这样：
-![image.png](https://i.postimg.cc/TPQZCjbr/image.png)
+![image.png](https://postimg.cc/2qKscYXq)
 
 ## 计划
 - 增加GUI界面
@@ -32,9 +32,7 @@ GUI大麦网自动抢票工具
 ```python 
 login(nick_name = '麦子')
 ```
-2. 下单:order(...),场次信息、票档（票价）信息，需要从下单的页面copy过来，如下图框中的部分。这个函数还有一个默认参数：refresh_interval，即刷新频率，目前设置为0.5s，看需要自己设置。有时候刷新太快会：
-> 抱歉！系统繁忙，暂时无法处理您的请求……
-
+2. 下单:order(...),场次信息、票档（票价）信息，需要从下单的页面copy过来，如下图框中的部分：
 [![image.png](https://i.postimg.cc/Pr7KMZPs/image.png)](https://postimg.cc/0bppkzYc)
 
 
