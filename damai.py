@@ -101,6 +101,7 @@ def confirm_order(audiences):
     这里可能要考虑下鲁棒性。
     """    
     candidates = driver.find_elements_by_class_name("next-checkbox-label")
+    print([i.text for i in candidates])
     as_least_one = False
     for who in audiences:
         for web_object in candidates:
