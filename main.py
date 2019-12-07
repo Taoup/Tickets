@@ -11,7 +11,7 @@ if __name__ == '__main__':
     retry = 100
 
     damai.login(nick_name = '麦子')
-    
+
     for i in range(retry):
         try:
             damai.order(target = target_url,          #抢票页面的url
@@ -19,12 +19,10 @@ if __name__ == '__main__':
                     date = '2020-03-07',        
                     price = '看台480元', 
                     num_tickets = 2)
-
             damai.confirm_order(audiences = ['马宏涛', 'xxx'])
         except Exception as e:
             my_print(e)
-            if "no such element: Unable to locate element" in str(e):
-                cnt += 1
+
         if damai.success:
             break
         my_print(f"重试第{i+1}次")
