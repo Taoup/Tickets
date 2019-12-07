@@ -1,8 +1,11 @@
 # Autoticket
-大麦网自动抢票工具
+GUI大麦网自动抢票工具
 
 注：**目前仅在win10，chrome环境测试过。**
 
+## 新增功能
+- 使用图形界面进行简单包装,大概长这样：
+![image.png](https://i.postimg.cc/TPQZCjbr/image.png)
 
 ## 计划
 - 增加GUI界面

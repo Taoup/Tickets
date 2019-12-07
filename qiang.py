@@ -19,6 +19,7 @@ window = sg.Window('Pattern 2B', layout)
 while True:  # Event Loop
     event, values = window.read()
     if event in  (None, 'Exit'):
+        damai.quit()
         break
     if event == '开抢！':
         target_url = values['target_url']
