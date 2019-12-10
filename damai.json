@@ -1,5 +1,8 @@
 {
-    "date_price": ".select_right_list_item",
+    "login": ".span-box-header",
+    "city": ".cityitem",
+    "date": ".select_right_list_item",
+    "price": ".select_right_list_item",
     "num_tickes": ".cafe-c-input-number-input",
     "buy_btn": ".buybtn",
     "audiences": ".next-checkbox-label",
