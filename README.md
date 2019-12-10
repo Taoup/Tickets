@@ -5,7 +5,7 @@
 
 ## 新增功能
 - 使用图形界面进行简单包装,大概长这样：
-![image.png](https://postimg.cc/2qKscYXq)
+![image.png](http://butnotover.live/static/media/gui.PNG)
 
 ## 计划
 - 增加GUI界面
