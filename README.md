@@ -1,5 +1,6 @@
 # Autoticket
-简单易用的大麦网自动抢票工具（图形界面）
+简单易用的图形大麦抢票脚本。
+欢迎大家使用，提issue、PR。
 
 注：**目前仅在win10，chrome环境测试过。**
 
@@ -8,8 +9,8 @@
 ![image.png](http://butnotover.live/static/media/gui.PNG)
 
 ## 计划
-- 增加GUI界面
-- 页面元素选取和抢票代码逻辑解耦
+* [x] 增加GUI界面
+* [x] 页面元素选取和抢票代码逻辑解耦
 
 
 ## 环境安装
