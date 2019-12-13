@@ -1,0 +1,11 @@
+{
+    "login": ".span-box-header",
+    "city": ".cityitem",
+    "date": ".select_right_list_item",
+    "price": ".select_right_list_item",
+    "num_tickes": ".cafe-c-input-number-input",
+    "buy_btn": ".buybtn",
+    "buyer_select": "div.dm-ticket-buyer",
+    "audiences": ".buyer-list-item>label",
+    "confirm_btn": ".submit-wrapper .next-btn"
+}

@@ -8,10 +8,12 @@
 - 使用图形界面进行简单包装,大概长这样：
 ![image.png](http://butnotover.live/static/media/gui.PNG)
 
-## 计划
-* [x] 增加GUI界面
-* [x] 页面元素选取和抢票代码逻辑解耦
 
+## 特色：
+- 页面元素选取和抢票代码逻辑解耦，虽然目前只有chrome支持，想要扩展其他浏览器变得非常简单
+- 页面元素的选取统一采用css selector， 代码阅读起来还算简单。
+- 利用了senelium的implicit wait，使得页面元素超时等待逻辑非常简单。
+- 还有简单的图形界面wrapper...
 
 ## 环境安装
 - python 3.6及以上环境
