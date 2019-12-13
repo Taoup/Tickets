@@ -1,4 +1,4 @@
-# Autoticket
+# Tickets!!
 简单易用的图形大麦抢票脚本。
 欢迎大家使用，提issue、PR。
 
